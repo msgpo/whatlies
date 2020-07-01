@@ -11,7 +11,7 @@ class OpenTsne:
     by means of tsne. This implementation used [open-tsne](https://opentsne.readthedocs.io/en/latest/tsne_algorithm.html).
 
     Important:
-        OpenTSNE is a faster variant of TSNE but it only allows for <2 components.
+        OpenTSNE is a faster variant of TSNE but it only allows for <= 2 components.
         You may also notice that it is relatively slow. This unfortunately is a fact of life.
 
     Arguments:
