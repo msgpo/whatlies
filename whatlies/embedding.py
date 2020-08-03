@@ -18,7 +18,7 @@ class Embedding:
 
     Usage:
 
-    ```
+    ```python
     from whatlies.embedding import Embedding
 
     foo = Embedding("foo", [0.1, 0.3])
@@ -45,7 +45,7 @@ class Embedding:
 
         Usage:
 
-        ```
+        ```python
         from whatlies.embedding import Embedding
 
         foo = Embedding("foo", [0.1, 0.3])
@@ -65,7 +65,7 @@ class Embedding:
 
         Usage:
 
-        ```
+        ```python
         from whatlies.embedding import Embedding
 
         foo = Embedding("foo", [0.1, 0.3])
@@ -85,7 +85,7 @@ class Embedding:
 
         Usage:
 
-        ```
+        ```python
         from whatlies.embedding import Embedding
 
         foo = Embedding("foo", [0.1, 0.3])
@@ -102,7 +102,7 @@ class Embedding:
 
         Usage:
 
-        ```
+        ```python
         from whatlies.embedding import Embedding
 
         foo = Embedding("foo", [0.1, 0.3])
@@ -127,7 +127,7 @@ class Embedding:
 
         Usage:
 
-        ```
+        ```python
         from whatlies.embedding import Embedding
 
         foo = Embedding("foo", [0.1, 0.3])
@@ -160,7 +160,7 @@ class Embedding:
             other: the other embedding you're comparing against
             metric: the distance metric to use, the list of valid options can be found [here](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html)
 
-        **Usage**
+        Usage:
 
         ```python
         from whatlies.embedding import Embedding
@@ -171,6 +171,7 @@ class Embedding:
         foo.distance(bar)
         foo.distance(bar, metric="euclidean")
         foo.distance(bar, metric="cosine")
+        ```
         """
         return pairwise_distances([self.vector], [other.vector], metric=metric)[0][0]
 
@@ -194,7 +195,8 @@ class Embedding:
             show_ops: setting to also show the applied operations, only works for `text`
             annot: should the points be annotated
 
-        **Usage**
+        Usage:
+
         ```python
         from whatlies.embedding import Embedding
 
