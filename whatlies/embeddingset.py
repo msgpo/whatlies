@@ -192,20 +192,22 @@ class EmbeddingSet:
              kwargs: keyword arguments to also pass to the function
 
         ```python
-        from whatlies.language import SpacyLanguage, BytePairLanguage
+        from whatlies.Language import SpacyLanguage
+        from whatlies.transformers import Umap
 
-        lang_sp = SpacyLanguage("en_core_web_sm")
-        lang_bp = BytePairLanguage("en", dim=25, vs=1000)
+        lang_md = SpacyLanguage("en_core_web_md")
+        lang_lg = SpacyLanguage("en_core_web_lg")
 
         text = ["cat", "dog", "rat", "blue", "red", "yellow"]
 
         def make_plot(embset):
             return (embset
-                    .plot_interactive("dog", "blue")
+                    .transform(Umap(2))
+                    .plot_interactive("umap_0", "umap_1", annot=False)
                     .properties(height=200, width=200))
 
-        p1 = lang_sp[text].pipe(make_plot)
-        p2 = lang_bp[text].pipe(make_plot)
+        p1 = lang_md[text].pipe(make_plot)
+        p2 = lang_lg[text].pipe(make_plot)
         p1 | p2
         ```
         """
@@ -347,7 +349,7 @@ class EmbeddingSet:
         emb1 = EmbeddingSet(foo, bar)
         emb2 = EmbeddingSet(xyz, buz)
 
-        both = emb1.merge(emb2)
+        both = em1.merge(emb2)
         ```
         """
         return EmbeddingSet({**self.embeddings, **other.embeddings})
@@ -472,13 +474,13 @@ class EmbeddingSet:
 
         ```python
         from whatlies.language import SpacyLanguage
-
-        lang = SpacyLanguage("en_core_web_sm")
+        lang1 = SpacyLanguage("en_core_web_sm")
+        lang2 = SpacyLanguage("en_core_web_md")
 
         names = ['red', 'blue', 'green', 'yellow', 'cat', 'dog', 'mouse', 'rat', 'bike', 'car']
-        emb = lang[names]
-        emb_ort = lang[names] | lang['cat']
-        emb.movement_df(emb_ort)
+        emb1 = lang1[names]
+        emb2 = lang2[names]
+        emb1.movement_df(emb2)
         ```
         """
         overlap = list(
@@ -555,9 +557,7 @@ class EmbeddingSet:
 
         ```python
         from whatlies.language import SpacyLanguage
-        import matplotlib.pyplot as plt
-
-        lang = SpacyLanguage("en_core_web_sm")
+        lang = SpacyLanguage("en_core_web_md")
 
         names = ['red', 'blue', 'green', 'yellow', 'cat', 'dog', 'mouse', 'rat', 'bike', 'car']
         emb = lang[names]
@@ -579,6 +579,7 @@ class EmbeddingSet:
 
         # Rotate the tick labels and set their alignment.
         plt.setp(ax.get_xticklabels(), rotation=90, ha="right", rotation_mode="anchor")
+        plt.show()
 
     def plot_pixels(self):
         """
@@ -588,9 +589,7 @@ class EmbeddingSet:
 
         ```python
         from whatlies.language import SpacyLanguage
-        from whatlies.transformers import Pca
-
-        lang = SpacyLanguage("en_core_web_sm")
+        lang = SpacyLanguage("en_core_web_md")
 
         names = ['red', 'blue', 'green', 'yellow',
                  'cat', 'dog', 'mouse', 'rat',
@@ -638,11 +637,11 @@ class EmbeddingSet:
                  "dog", "cat", "mouse", "red", "bluee", "green", "yellow", "water",
                  "person", "family", "brother", "sister"]
 
-        lang = SpacyLanguage("en_core_web_sm")
+        lang = SpacyLanguage("en_core_web_md")
         emb = lang[words]
         emb_new = emb - emb['king']
 
-        emb.plot_movement(emb_new, 'man', 'woman')
+        emb.plot_difference(emb_new, 'man', 'woman')
         ```
         """
         if isinstance(x_axis, str):
@@ -720,7 +719,7 @@ class EmbeddingSet:
                  "dog", "cat", "mouse", "red", "bluee", "green", "yellow", "water",
                  "person", "family", "brother", "sister"]
 
-        lang = SpacyLanguage("en_core_web_sm")
+        lang = SpacyLanguage("en_core_web_md")
         emb = lang[words]
 
         emb.plot_interactive('man', 'woman')
@@ -804,7 +803,7 @@ class EmbeddingSet:
                  "dog", "cat", "mouse", "red", "bluee", "green", "yellow", "water",
                  "person", "family", "brother", "sister"]
 
-        lang = SpacyLanguage("en_core_web_sm")
+        lang = SpacyLanguage("en_core_web_md")
         emb = lang[words]
 
         emb.transform(Pca(3)).plot_interactive_matrix('pca_0', 'pca_1', 'pca_2')
